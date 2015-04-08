@@ -18,8 +18,6 @@ import processing.pdf.*;
 
 // General
 int canvasSize = 640; // 550 minimum value
-int backingStoreRatio = 1;//4;
-int renderCanvasSize = canvasSize * backingStoreRatio;
 
 // Data
 String date, year, month, day;
@@ -28,7 +26,7 @@ String apiCall;
 HashMap<String, Move> moves = new HashMap<String, Move>();
 
 // Draw
-int placeSize = 6;
+int placeSize = 4;
 FloatDict max_lats = new FloatDict();
 FloatDict min_lats = new FloatDict();
 FloatDict max_longs = new FloatDict();
@@ -39,8 +37,6 @@ StringDict placesDrawn = new StringDict();
 int margin = 30;
 int top_margin = margin + 50;
 
-// for PDF export
-PGraphics pg;
 Boolean record = false;
 
 // GUI
@@ -71,7 +67,6 @@ void setup() {
   smooth();
   hint(ENABLE_STROKE_PURE);
   cp5 = new ControlP5(this);
-  //pg = createGraphics(renderCanvasSize, renderCanvasSize);
 
   // Instantiate Date GUI
   GUIcheckbox("checkbox", 150, height-135);
@@ -185,9 +180,6 @@ void draw() {
   if(record) {
     beginRecord(PDF, "pdfs/"+input.getText());
   }
-  
-  //pg.beginDraw();
-  //pg.clear();
 
   // Draw Moves
   for (int i=0; i<movesDates.length; i++) {      
@@ -203,9 +195,6 @@ void draw() {
     println("Saving PDF file to pdfs/"+input.getText()+"...");
     endRecord();
   }
-
-  //pg.endDraw();
-  //image(pg, 0, 0, canvasSize, canvasSize);
 }
  
 
