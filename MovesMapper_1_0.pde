@@ -16,7 +16,9 @@ import java.util.Map;
 // - - - - - - - - - - - - - - - - - - - - - - - 
 
 // General
-int canvasSize = 800; // 550 minimum value
+int canvasSize = 640; // 550 minimum value
+int backingStoreRatio = 4;
+int renderCanvasSize = canvasSize * backingStoreRatio;
 
 // Data
 String date, year, month, day;
@@ -35,6 +37,7 @@ float mapOffset;
 StringDict placesDrawn = new StringDict();
 int margin = 30;
 int top_margin = margin + 50;
+PGraphics pg;
 
 // GUI
 ControlP5 cp5;
@@ -62,6 +65,7 @@ void setup() {
   smooth();
   hint(ENABLE_STROKE_PURE);
   cp5 = new ControlP5(this);
+  pg = createGraphics(renderCanvasSize, renderCanvasSize);
 
   // Instantiate Date GUI
   GUIcheckbox("checkbox", 150, height-135);
@@ -155,6 +159,9 @@ void draw() {
   background(40);
   placesDrawn.clear();
   timeLabel();
+  
+  pg.beginDraw();
+  pg.clear();
 
   // Draw Moves
   for (int i=0; i<movesDates.length; i++) {      
@@ -164,4 +171,7 @@ void draw() {
     catch (Exception e) {
     }
   }
+  
+  pg.endDraw();
+  image(pg, 0, 0, canvasSize, canvasSize);
 }

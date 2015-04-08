@@ -151,39 +151,41 @@ class Move {
   void display() {
     // Draw Paths
     noFill();
+    pg.strokeWeight(4);
     for (int i=0; i<path_long.length; i++) {
       if (i > 0  && path_time[i] < TimeOfDay && path_time[i] > 0) {
-        if (path_type[i].equals("cyc") && cycle.booleanValue()) {
-          stroke(0, 255, 255, 100);
-          line(loc_x[i], loc_y[i], loc_x[i-1], loc_y[i-1]);
+        
+        if (path_type[i].equals("trp") && transportation.booleanValue()) {
+          pg.stroke(255, 155, 0, 100);
+          pg.line(loc_x[i], loc_y[i], loc_x[i-1], loc_y[i-1]);
+        }
+        else if (path_type[i].equals("cyc") && cycle.booleanValue()) {
+          pg.stroke(0, 255, 255, 100);
+          pg.line(loc_x[i], loc_y[i], loc_x[i-1], loc_y[i-1]);
         } 
         else if (path_type[i].equals("run") && run.booleanValue()) {
-          stroke(255, 0, 255, 100);
-          line(loc_x[i], loc_y[i], loc_x[i-1], loc_y[i-1]);
+          pg.stroke(255, 0, 255, 100);
+          pg.line(loc_x[i], loc_y[i], loc_x[i-1], loc_y[i-1]);
         }
         else if (path_type[i].equals("wlk") && walk.booleanValue()) {
-          stroke(255, 255, 0, 100);
-          line(loc_x[i], loc_y[i], loc_x[i-1], loc_y[i-1]);
-        }
-        else if (path_type[i].equals("trp") && transportation.booleanValue()) {
-          stroke(255, 40);
-          line(loc_x[i], loc_y[i], loc_x[i-1], loc_y[i-1]);
+          pg.stroke(55, 255, 0, 100);
+          pg.line(loc_x[i], loc_y[i], loc_x[i-1], loc_y[i-1]);
         }
       }
     }
     // Draw Places
-    noStroke();
+    pg.noStroke();
     for (int i=0; i<place_long.length; i++) {
       if (placesDrawn.hasKey(place_name[i])) {
       } 
       else if ( labels.booleanValue() && place_time[i] < TimeOfDay && place_time[i] > 0 ) {
-        place_loc_x = map(place_long[i], min_long, max_long, margin + space_long, canvasSize-margin - space_long);
-        place_loc_y = map(place_lat[i], max_lat, min_lat, top_margin + space_lat, canvasSize-margin - space_lat);
-        fill(255);
-        ellipse(place_loc_x, place_loc_y, placeSize, placeSize);
-        fill(255, 150);
-        textSize(9);
-        text(place_name[i], place_loc_x+placeSize, place_loc_y+3);
+        place_loc_x = map(place_long[i], min_long, max_long, margin + space_long, renderCanvasSize-margin - space_long);
+        place_loc_y = map(place_lat[i], max_lat, min_lat, top_margin + space_lat, renderCanvasSize-margin - space_lat);
+        pg.fill(255);
+        pg.ellipse(place_loc_x, place_loc_y, placeSize, placeSize);
+        pg.fill(255, 150);
+        //pg.textSize(9);
+        //pg.text(place_name[i], place_loc_x+placeSize, place_loc_y+3);
         placesDrawn.set(place_name[i], "true");
       }
     }
@@ -218,24 +220,24 @@ class Move {
     loc_y = new float[path_lat.length];
     computeSpace();
     for (int i=0; i<path_long.length; i++) {
-      loc_x[i] = map(path_long[i], min_long, max_long, margin + space_long, canvasSize-margin - space_long);
-      loc_y[i] = map(path_lat[i], max_lat, min_lat, top_margin + space_lat, canvasSize-margin - space_lat);
+      loc_x[i] = map(path_long[i], min_long, max_long, margin + space_long, renderCanvasSize-margin - space_long);
+      loc_y[i] = map(path_lat[i], max_lat, min_lat, top_margin + space_lat, renderCanvasSize-margin - space_lat);
     }
   }
 
   void computeSpace() {
     // Compute relation coefficient between longitudes and latitudes
     float ratio = (float) Math.sin((90.0 - ((max_lat + min_lat) / 2.0)) / 180.0 * Math.PI);
-    float coef = ratio / (float) (canvasSize - 2 * margin) * (float) (canvasSize - margin - top_margin);
+    float coef = ratio / (float) (renderCanvasSize - 2 * margin) * (float) (renderCanvasSize - margin - top_margin);
     long_delta = abs(max_long-min_long) * coef;
     lat_delta = abs(max_lat-min_lat);
     if (long_delta > lat_delta) {
       space_long = 0;
-      space_lat = (canvasSize - margin - top_margin) * (1 - lat_delta / long_delta) / 2;
+      space_lat = (renderCanvasSize - margin - top_margin) * (1 - lat_delta / long_delta) / 2;
     }
     else {
       space_lat = 0;
-      space_long = (canvasSize - 2 * margin) * (1 - long_delta / lat_delta) / 2;
+      space_long = (renderCanvasSize - 2 * margin) * (1 - long_delta / lat_delta) / 2;
     }
   }
 
