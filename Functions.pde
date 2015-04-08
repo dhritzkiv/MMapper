@@ -128,6 +128,12 @@ void controlEvent(ControlEvent theEvent) {
   }
 }
 
+void keyPressed() {
+  if (keyCode == 83) {//"s"
+    pg.save("map.png"); 
+  }
+}
+
 
 // Format Events into Array of Dates 
 // - - - - - - - - - - - - - - - - - - - - - - - 
