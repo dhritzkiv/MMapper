@@ -151,7 +151,7 @@ class Move {
   void display() {
     // Draw Paths
     noFill();
-    pg.strokeWeight(4);
+    pg.strokeWeight(backingStoreRatio);
     for (int i=0; i<path_long.length; i++) {
       if (i > 0  && path_time[i] < TimeOfDay && path_time[i] > 0) {
         
