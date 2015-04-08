@@ -18,7 +18,7 @@ import processing.pdf.*;
 
 // General
 int canvasSize = 640; // 550 minimum value
-int backingStoreRatio = 4;
+int backingStoreRatio = 1;//4;
 int renderCanvasSize = canvasSize * backingStoreRatio;
 
 // Data
@@ -71,7 +71,7 @@ void setup() {
   smooth();
   hint(ENABLE_STROKE_PURE);
   cp5 = new ControlP5(this);
-  pg = createGraphics(renderCanvasSize, renderCanvasSize);
+  //pg = createGraphics(renderCanvasSize, renderCanvasSize);
 
   // Instantiate Date GUI
   GUIcheckbox("checkbox", 150, height-135);
@@ -186,8 +186,8 @@ void draw() {
     beginRecord(PDF, "pdfs/"+input.getText());
   }
   
-  pg.beginDraw();
-  pg.clear();
+  //pg.beginDraw();
+  //pg.clear();
 
   // Draw Moves
   for (int i=0; i<movesDates.length; i++) {      
@@ -204,8 +204,8 @@ void draw() {
     endRecord();
   }
 
-  pg.endDraw();
-  image(pg, 0, 0, canvasSize, canvasSize);
+  //pg.endDraw();
+  //image(pg, 0, 0, canvasSize, canvasSize);
 }
  
 
@@ -216,4 +216,3 @@ void draw() {
 public void exportPDF() {
  record = true;
 }
-

@@ -130,7 +130,7 @@ void controlEvent(ControlEvent theEvent) {
 
 void keyPressed() {
   if (keyCode == 83) {//"s"
-    pg.save("map.png"); 
+    //pg.save("map.png"); 
   }
 }
 
@@ -203,6 +203,3 @@ void timeLabel() {
 
   cp5.getController("TimeOfDay").getValueLabel().setText(TimeString);
 }
-
-
-
