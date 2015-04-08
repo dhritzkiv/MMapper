@@ -27,7 +27,7 @@ String apiCall;
 HashMap<String, Move> moves = new HashMap<String, Move>();
 
 // Draw
-int placeSize = 6;
+int placeSize = backingStoreRatio * 4;
 FloatDict max_lats = new FloatDict();
 FloatDict min_lats = new FloatDict();
 FloatDict max_longs = new FloatDict();
